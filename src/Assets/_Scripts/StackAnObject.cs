@@ -11,10 +11,18 @@ public class StackAnObject : MonoBehaviour, IInputHandler
 	// Tap for HoloLens, Trigger for controllers
 	void IInputHandler.OnInputUp(InputEventData eventData)
 	{
+        
 		var o = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		o.transform.localScale = new Vector3(1f, 0.1f, 1f);
-		o.transform.position = new Vector3(0f, 10f, 10f);
-		o.AddComponent<Rigidbody>();
+        Debug.Log("Posistion: x=" + transform.position.x + ", z=" + transform.position.z);
+
+        // Gaze position != Controller position
+        o.transform.position = new Vector3(GazeManager.Instance.HitPosition.x, 
+            10f, 
+            GazeManager.Instance.HitPosition.z);
+
+        o.GetComponent<Renderer>().material.color = Random.ColorHSV(0f, 1f, 0.6f, 1f, 1f, 1f, 0f, 0.2f);
+        o.AddComponent<Rigidbody>();
 	}
 
 	// Use this for initialization
